@@ -1,32 +1,39 @@
-import React from 'react';
+// src/components/Noticias.js
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { obtenerNoticias } from '../services/api';
 
-function Noticias({ noticias, setComentarios }) {
-    // Maneja la selección de una noticia para obtener sus comentarios
-    const handleSelectNoticia = (id) => {
-        fetch(`/api/notas/${id}/comentarios`)
-            .then(response => response.json())
-            .then(data => setComentarios(data))
-            .catch(error => console.error('Error al cargar comentarios:', error));
+function Noticias() {
+  const [noticias, setNoticias] = useState([]);
+
+  useEffect(() => {
+    // Cargar las noticias al montar el componente
+    const cargarNoticias = async () => {
+      try {
+        const respuesta = await obtenerNoticias();
+        setNoticias(respuesta.data);
+      } catch (error) {
+        console.error('Error al obtener las noticias:', error);
+      }
     };
+    
+    cargarNoticias();
+  }, []);
 
-    return (
-        <div className="noticias">
-            <h2>Noticias</h2>
-            {noticias.length > 0 ? (
-                <ul>
-                    {noticias.map((nota) => (
-                        <li key={nota.idnota} onClick={() => handleSelectNoticia(nota.idnota)}>
-                            <h3>{nota.titulo}</h3>
-                            <p>{nota.contenido}</p>
-                            <small>Fecha de Publicación: {new Date(nota.fecha_publicacion).toLocaleString()}</small>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No hay noticias disponibles.</p>
-            )}
-        </div>
-    );
+  return (
+    <div>
+      <h2>Lista de Noticias</h2>
+      <ul>
+        {noticias.map((noticia) => (
+          <li key={noticia.idnota}>
+            <h3>{noticia.titulo}</h3>
+            <p>{noticia.contenido}</p>
+            <Link to={`/noticias/${noticia.idnota}/comentarios`}>Ver Comentarios</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default Noticias;

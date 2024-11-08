@@ -1,0 +1,2 @@
+(this["webpackJsonpsistema-noticias-frontend"]=this["webpackJsonpsistema-noticias-frontend"]||[]).push([[0],{10:function(e,n,t){"use strict";t.r(n);var i=t(1),s=t.n(i),c=t(4),a=t.n(c),o=(t(3),t(0));var r=function(){return Object(o.jsx)("div",{className:"App",children:Object(o.jsx)("h1",{children:"\xa1Bienvenido al sistema de noticias!"})})};a.a.render(Object(o.jsx)(s.a.StrictMode,{children:Object(o.jsx)(r,{})}),document.getElementById("root"))},3:function(e,n,t){}},[[10,1,2]]]);
+//# sourceMappingURL=main.8ef73fc9.chunk.js.map

@@ -1,29 +1,29 @@
-# Usamos una imagen base de Node.js para construir el proyecto
-FROM node:14 AS build
+# Usa una imagen de Node.js
+FROM node:14
 
-# Establecemos el directorio de trabajo en /app
+# Establece el directorio de trabajo en /app
 WORKDIR /app
 
-# Copiamos package.json y package-lock.json para instalar dependencias
-COPY package*.json ./
+# Copia package.json y package-lock.json
+COPY package*.json /app/
 
-# Instalamos las dependencias
+# Instala las dependencias
 RUN npm install
 
-# Copiamos el resto del código de la aplicación
-COPY . .
+# Copia el resto del código del frontend
+COPY . /app
 
-# Construimos la aplicación para producción
+# Construye la aplicación
 RUN npm run build
 
-# Usamos una imagen base de Nginx para servir la aplicación
+# Usa una imagen de servidor web para servir la app
 FROM nginx:alpine
 
-# Copiamos los archivos de la build de React generados al directorio de Nginx
-COPY --from=build /app/build /usr/share/nginx/html
+# Copia los archivos de build de React a nginx
+COPY --from=0 /app/build /usr/share/nginx/html
 
-# Exponemos el puerto 80 para que Nginx sirva la aplicación
+# Expone el puerto 80
 EXPOSE 80
 
-# Comando por defecto para ejecutar Nginx
+# Inicia el servidor
 CMD ["nginx", "-g", "daemon off;"]
