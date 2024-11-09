@@ -20,4 +20,4 @@ git status
 ### Clonar el repositorio
 
 ```bash
-git clone https://github.com/HannaAldacd/ExamenUCEM.git
+git clone https://github.com/HannaAlda/ExamenUCEM.git
